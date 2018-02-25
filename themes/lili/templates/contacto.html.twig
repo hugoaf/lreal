@@ -1,0 +1,55 @@
+{% extends 'partials/snipcart_base.html.twig' %}
+
+{% block content %}
+    {{ page.content }}
+    <div class=" sucursales">
+        
+        <div class="sucursal columns">
+            <div class="titulo col-6"><h2>Sucursal Río</h2></div>
+            <div class="detalles col-6">
+                <div class="social">
+                    <a href=""><i class="fa fa-lg fa-facebook"></i></a>
+                    <a href=""><i class="fa fa-lg fa-twitter"></i></a>
+                    <a href=""><i class="fa fa-lg fa-instagram"></i></a>
+                </div>        
+            </div>
+            <div class="imagen col-6 col-sm-12">{{ page.media.images['rio.jpg'].cropZoom(500,500).html }}</div>
+            <div class="mapa  col-6 col-sm-12">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1682.7826136597748!2d-116.92706523396113!3d32.48431885812115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fb23892fabb281%3A0x228cd1e7bc5cdfbc!2sLILIANA+REAL!5e0!3m2!1ses-419!2smx!4v1519019797912" width="500" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="sucursal columns">
+            <div class="titulo col-6"><h2>Sucursal Cacho</h2></div>
+            <div class="detalles col-6">
+                <div class="social">
+                    <a href=""><i class="fa fa-lg fa-facebook"></i></a>
+                    <a href=""><i class="fa fa-lg fa-twitter"></i></a>
+                    <a href=""><i class="fa fa-lg fa-instagram"></i></a>
+                </div>        
+            </div>
+            <div class="imagen col-6 col-sm-12">{{ page.media.images['cacho.jpg'].cropZoom(500,500).html }}</div>
+            <div class="mapa  col-6 col-sm-12">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1682.7826136597748!2d-116.92706523396113!3d32.48431885812115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fb23892fabb281%3A0x228cd1e7bc5cdfbc!2sLILIANA+REAL!5e0!3m2!1ses-419!2smx!4v1519019797912" width="500" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+        
+        <div class="sucursal columns">
+            <div class="titulo col-6"><h2>Sucursal Girasol</h2></div>
+            <div class="detalles col-6">
+                <div class="social">
+                    <a href=""><i class="fa fa-lg fa-facebook"></i></a>
+                    <a href=""><i class="fa fa-lg fa-twitter"></i></a>
+                    <a href=""><i class="fa fa-lg fa-instagram"></i></a>
+                </div>        
+            </div>
+            <div class="imagen col-6 col-sm-12">{{ page.media.images['girasol.jpg'].cropZoom(500,500).html }}</div>
+            <div class="mapa  col-6 col-sm-12">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1682.7826136597748!2d-116.92706523396113!3d32.48431885812115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fb23892fabb281%3A0x228cd1e7bc5cdfbc!2sLILIANA+REAL!5e0!3m2!1ses-419!2smx!4v1519019797912" width="500" height="500" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock %}

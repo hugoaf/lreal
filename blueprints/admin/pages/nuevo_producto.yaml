@@ -1,0 +1,36 @@
+form:
+  validation: loose
+  fields:
+    section:
+        type: section
+        title: Adicionar Producto
+
+    title:
+      type: text
+      label: Nombre del Producto
+      validate:
+        required: true
+
+    folder:
+      type: hidden
+      default: '@slugify-title'
+
+
+    route:
+      type: parents
+      label: Categoría
+      classes: fancy
+      default: ''
+      validate:
+        required: true
+
+    name:
+      type: hidden
+      default: 'producto'
+
+    visible:
+      type: hidden
+      default: ''
+
+    blueprint:
+      type: blueprint

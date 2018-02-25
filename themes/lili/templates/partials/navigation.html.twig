@@ -1,0 +1,70 @@
+{% set level = 1 %}
+{% macro nav_loop(page, level) %}
+    {% for p in page.children.visible %}
+        {% set active_page = (p.active or p.activeChild) ? 'active' : '' %}
+        {% if p.children.visible.count > 0 %}
+            {% set level = level + 1 %}
+            <li style="position:inherit;">
+                <a href="{{ p.url }}" class="{{ active_page }}">
+                    {{ p.menu }}
+                </a>
+
+                <ul class="menu-level-{{ level }}"  >
+
+                    <div class="menu-links">
+                        {{ _self.nav_loop(p) }}
+                    </div>
+
+
+                    <div class="menu-extras">
+                          {% if p.header.links.temporada.enabled|defined(false) %}
+                            <div class="menu-extra-block">
+                                <div class="menu-extras-img">
+                                    <a href="{{ p.url ~ '/coleccion:temporada' }}">
+                                        {% if p.header.links.temporada.img|defined(false) %}{{ p.media.images[p.header.links.temporada.img].cropZoom(180,250).html }}{% endif %}
+                                        <div class="link-text">{{ p.header.links.temporada.text }}</div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if p.header.links.oferta.enabled|defined(false) %}
+                            <div class="menu-extra-block">
+                                <div class="menu-extras-img">
+                                    <a href="{{ p.url ~ '/coleccion:ofertas' }}">
+                                        {% if p.header.links.oferta.img|defined(false) %}{{ p.media.images[p.header.links.oferta.img].cropZoom(180,250).html }}{% endif %}
+                                        <div class="link-text">{{ p.header.links.oferta.text }}</div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if p.header.links.blog.enabled|defined(false) %}
+                            <div class="menu-extra-block">
+                                <div class="menu-extras-img">
+                                    <a href="{{ page.find('/blog').url }}">
+                                        {% if p.header.links.blog.img|defined(false) %}{{ p.media.images[p.header.links.blog.img].cropZoom(180,250).html }}{% endif %}
+                                        <div class="link-text">{{ p.header.links.blog.text }}</div>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </ul>
+
+
+            </li>
+        {% else %}
+            <li style="position:inherit;">
+                <a href="{{ p.url }}" class="{{ active_page }}">
+                    {{ p.menu }}
+                </a>
+            </li>
+        {% endif %}
+        {% set level = 1 %}
+    {% endfor %}
+{% endmacro %}
+
+<ul {{ tree ? 'class="tree"' : '' }} class="menu-level-{{ level }}">
+    {{ _self.nav_loop(pages, level) }}
+</ul>
+

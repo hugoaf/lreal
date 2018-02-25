@@ -1,0 +1,3 @@
+enabled: true
+route: /snipcart-shipping
+template: snipcart-shipping_results

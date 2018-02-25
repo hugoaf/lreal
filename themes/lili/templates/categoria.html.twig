@@ -1,0 +1,35 @@
+{% extends 'partials/snipcart_base.html.twig' %}
+{% set productos = page.collection({'items': '@self.children' ,'order': {'by': 'header.date','dir': 'desc'}}).oftype('producto') %}
+
+{% block content %}
+
+    {{ parent() }}
+
+    <div class="content-wrapper">
+        {{ page.content|raw }}
+        <div class="category-products columns">   
+
+            <div class="productos-oferta col-12">
+                <div class="products col-12">
+                    <div class="columns">
+                        {% for producto in productos %}
+                            {% if (producto.header.unpublished is not defined or (producto.header.unpublished == false)) %}
+                                <div class="bloque-producto col-6 col-sm-12">
+                                    {% include 'partials/snipcart_product_item.html.twig' with {'page': producto, 'parent': page} %}
+                                    <div class="labels">
+                                        {{ ( producto.header.date|date('U') > "-15 days"|date("U") ) ? "<label class='nuevo'>Nuevo</label>"  }}
+                                        {{ producto.header.oferta ? "<label class='oferta'>Oferta</label>"  }}
+                                        {{ producto.header.temporada ? "<label class='temporada'>Temporada</label>"  }}</label>
+                                        {{ producto.header.solo_en_linea ? "<label class='soloenlinea'>Solo en línea</label>"  }}</label>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

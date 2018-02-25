@@ -1,0 +1,9 @@
+{% extends 'partials/snipcart_base.html.twig' %}
+
+{% block content %}
+    
+    {% include 'modular/lightslider.html.twig' with {'page': page.find('/slider', true)} %}
+    
+    
+    {{ page.content }}
+{% endblock %}

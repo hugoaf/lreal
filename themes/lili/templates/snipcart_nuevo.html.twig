@@ -1,0 +1,80 @@
+{% extends 'partials/snipcart_base.html.twig' %}
+
+{% block content %}
+
+    {{ parent() }}
+    
+    {% set productos = page.collection({'items': '@root.descendants' ,'order': {'by': 'header.date','dir': 'desc'}}).oftype('producto') %}
+
+    {% macro show_product(producto) %}
+        {% if (producto.header.unpublished is not defined or (producto.header.unpublished == false)) %}
+        <div class="bloque-producto col-6 col-sm-12">
+            {% include 'partials/snipcart_product_item.html.twig' with {'page': producto, 'parent': page} %}
+            <div class="labels">
+            {{ ( producto.header.date|date('U') > "-15 days"|date("U") ) ? "<label class='nuevo'>Nuevo</label>"  }}
+            {{ producto.header.oferta ? "<label class='oferta'>Oferta</label>"  }}
+            {{ producto.header.temporada ? "<label class='temporada'>Temporada</label>"  }}</label>
+            {{ producto.header.solo_en_linea ? "<label class='soloenlinea'>Solo en línea</label>"  }}</label>
+            </div>
+        </div>
+        {% endif %}
+    {% endmacro %}
+    
+    
+    
+<div class="content-wrapper">
+    {{ page.content }}
+        
+    <div class="category-products columns">     
+        
+        {# productos.count #}
+        
+        
+        {% set coleccion_url = uri.param('coleccion') %}
+        
+        {% if coleccion_url == 'ofertas' %}
+        <div class="productos-oferta col-12">
+            <div class="columns">
+                {% for producto in productos if producto.header.oferta %}
+                 {{ _self.show_product(producto) }}
+            {% endfor %}
+            </div>
+        </div>
+        
+        {% elseif coleccion_url == 'temporada' %}
+        <div class="productos-temporada col-12">
+            <div class="columns">
+            {% for producto in productos if producto.header.temporada %}
+                 {{ _self.show_product(producto) }}
+            {% endfor %}
+            </div>
+        </div>
+            
+        {% else %}
+            <div class="latest-products col-12">
+                <div class="columns">
+                {% for producto in productos if producto.header.date|date('U') > "-15 days"|date("U") %}
+                    {{ _self.show_product(producto) }}
+                {% endfor %}
+                </div>
+            </div>
+                           
+        {% endif %}
+
+    </div>   
+        
+        <!--
+        <div class="snipcart-categories container">
+        {% for page in pages.children %}    
+        {% for child in page.collection()  %}
+            {% if (child.header.unpublished is not defined or (child.header.unpublished == false)) %}
+                {% include 'partials/snipcart_category_item.html.twig' with {'page': child, 'parent': page} %}
+            {% endif %}
+        {% endfor %}
+        {% endfor %}
+        </div>   
+        -->
+        
+
+</div>
+{% endblock %}

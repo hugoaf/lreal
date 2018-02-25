@@ -1,0 +1,25 @@
+title: Categoría
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+
+      fields:
+
+        content:
+
+            fields:
+                
+                
+                test:
+                  type: section
+                  underline: false
+                  
+
+        options:
+          unset@: true
+        advanced:
+          unset@: true

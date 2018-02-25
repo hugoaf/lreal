@@ -1,0 +1,127 @@
+{% set snipcart_image = page.media.images|first %}
+
+{% set price_usd = (page.header.price_mxn/page.find('/configuracion').header.tipo_de_cambio)|number_format(2) %}
+
+
+{% set talla = uri.param('talla')|defined('') %}
+{% set color = uri.param('color')|defined('') %}
+{% set titulo = page.header.title %}
+{% set url = page.url %}
+{% set id = page.header.product_id %}
+
+{% if talla is not empty %}
+    {% set titulo = titulo ~ ' talla: ' ~ talla|replace({' ':''}) %}
+    {% set url = url ~ '/talla:' ~ talla %}
+    {% set id = id ~ '-' ~ talla %}
+{% endif %}
+
+{% if color is not empty %}
+    {% set titulo = titulo ~ ' color: ' ~ color|replace({' ':''}) %}
+    {% set url = url ~ '/color:' ~ color %}
+    {% set id = id ~ '-' ~ color %}
+{% endif %}
+
+
+<div id="snipcart-detail" class="block-group">
+
+    {{ page.order|trim('.') }}
+
+
+    <div class="snipcart-info block">
+        <div class="snipcart-img" >
+            {% if snipcart_image %}
+                <!--
+                <a href="#" data-featherlight="{{ snipcart_image.url(page.header.title,'snipcart-image')|raw }}">{{ snipcart_image.cropResize(600,600).html(page.header.title,'snipcart-thumb-image-l')|raw }}</a>
+                -->
+                <!--
+                 <div class="owl-carousel">
+                {% for i in page.media.images %}
+                <div class="item"><img src="{{ i.cropResize(600,600).url }}" /></div>
+                {% endfor %}
+            </div>
+                -->
+
+                {% include 'modular/lightslider.html.twig' with {'page': page } %}
+
+
+            {% endif %}
+            <span class="snipcart-price">
+
+                <!-- precio en USD deshabilitado por incompatibilidad con snipcart costo de envio-->
+                <div class="precio_usd" style="{% if grav.language.getLanguage()|e != 'en' %}display:none;{% endif %} ">
+                    <span class="precio">${{ price_usd }}</span> <span class="moneda">USD</span> 
+                </div>
+
+                <div class="precio_mxn" style="{% if grav.language.getLanguage()|e != 'es' %}display:none;{% endif %} ">
+                    <span class="precio">${{ page.header.price_mxn }}</span> <span class="moneda">MXN</span>
+                </div>
+
+            </span>
+        </div>
+
+    </div>
+    <div class="snipcart-details block" >
+
+        <!--
+        <div id="app">
+            <% message %>
+        </div>
+        -->
+        <div style="margin-left: 3rem;">
+            <h1>{{ page.header.title }}</span></h1>
+
+            {% if page.header.variantes.tallas %}
+            <label><span class="talla-text">{{ "SELECT_CLOTH_SIZE"|t }}<span></label>
+            <div id="tallas">
+                {% for talla in page.header.variantes.tallas %}
+                    <div class="option talla" id="talla-{{ talla.name }}" data-talla-text="{{ talla.name }}" data-name="{{ "CLOTH_SIZE"|t }}">{{ talla.name }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <br />
+
+            {% if page.header.variantes.colores %}
+                <label><span class="color-text">{{ "SELECT_CLOTH_COLOR"|t }}</span></label>
+                <div id="colores">
+                    {% for color in page.header.variantes.colores %}
+                        <div class="option color" id="color-{{ color.name }}" data-color-text="{{ color.name }}"  data-name="Color" style="background-color:{{ color.code }}">&nbsp;</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+
+            <div>
+                <a href="#"
+                   class="button snipcart-add-item"
+                   data-item-id="{{ id }}"
+                   data-item-name="{{ titulo }}"
+                   data-item-price='{"usd": {{ price_usd }}, "mxn": {{ page.header.price_mxn }} }'
+                   data-item-url="{{ url }}"
+                   data-item-weight="{{ page.header.envios.peso|default(1000) }}"
+                   {% spaceless %}
+                       {% if snipcart_image %}
+                           data-item-image="{{ snipcart_image.cropResize(50,50).url }}"
+                       {% endif %}
+                   {% endspaceless %}
+
+                   >
+                    <i class="fa fa-shopping-cart"></i> {{ "ADD_TO_CART"|t }}
+                </a>
+            </div>
+            
+            
+            <p>{{ page.content|raw }}</p>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+const SELECT_MSG = '{{ "SELECT_MSG"|t }}';
+//var variantes = {{ page.header.variantes|json_encode()  }};
+
+$(document).ready(function () {
+    //console.log(variantes.tallas)
+});
+</script>

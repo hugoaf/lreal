@@ -1,0 +1,126 @@
+title: Categoría
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+
+      fields:
+
+        content:
+
+            fields:
+
+            fields:
+                
+                links:
+                  type: section
+                  title: Links
+                  underline: true
+                
+                temporada:
+                  type: columns
+                  fields:
+                      column1:
+                        type: column
+                        fields:
+                            header.links.temporada.enabled:
+                                type: toggle
+                                toggleable: false
+                                label: Temporada
+                                default: 1
+                                highlight: 1
+                                options:
+                                  1: 'Si'
+                                  0: 'No'
+                      column2:
+                        type: column
+                        fields:                      
+                    
+                            header.links.temporada.text:
+                                type: text
+                                label: Texto
+                                default: 'Temporada'
+                      
+                      column3:
+                        type: column
+                        fields:                      
+                            header.links.temporada.img:
+                                type: filepicker
+                                folder: '@self'
+                                preview_images: true
+                                label: Imagen
+
+                oferta:
+                  type: columns
+                  fields:
+                      column1:
+                        type: column
+                        fields:
+                            header.links.oferta.enabled:
+                                type: toggle
+                                toggleable: false
+                                label: Oferta
+                                default: 1
+                                highlight: 1
+                                options:
+                                  1: 'Si'
+                                  0: 'No'
+                      column2:
+                        type: column
+                        fields:                      
+                            header.links.oferta.text:
+                                type: text
+                                label: Texto
+                                default: 'Ofertas'
+                      
+                      column3:
+                        type: column
+                        fields:                      
+                            header.links.oferta.img:
+                                type: filepicker
+                                folder: '@self'
+                                preview_images: true
+                                label: Imagen
+
+
+                blog:
+                  type: columns
+                  fields:
+                      column1:
+                        type: column
+                        fields:
+                            header.links.blog.enabled:
+                                type: toggle
+                                toggleable: false
+                                label: Blog
+                                default: 1
+                                highlight: 1
+                                options:
+                                  1: 'Si'
+                                  0: 'No'
+                      column2:
+                        type: column
+                        fields:                      
+                            header.links.blog.text:
+                                type: text
+                                label: Texto
+                                default: 'Estilo'
+                      
+                      column3:
+                        type: column
+                        fields:                      
+                            header.links.blog.img:
+                                type: filepicker
+                                folder: '@self'
+                                preview_images: true
+                                label: Imagen                  
+                  
+
+
+        options:
+          unset@: true
+        advanced:
+          unset@: true

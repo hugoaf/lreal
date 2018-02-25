@@ -1,0 +1,25 @@
+title: Categoría
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+      fields:
+        configuracion:
+          type: tab
+          title: Configuración        
+          fields:
+            header.tipo_de_cambio:
+              type: text
+              label: Tipo de Cambio
+
+
+
+        content:
+          unset@: true
+        options:
+          unset@: true
+        advanced:
+          unset@: true

@@ -1,0 +1,129 @@
+title: Producto
+'@extends':
+    type: default
+    context: blueprints://pages
+
+form:
+  fields:
+    tabs:
+
+      fields:
+
+        content:
+
+            fields:
+
+              header.product_id:
+                ordering@: 1
+                type: text
+                label: 'ID Producto (SKU)'
+                data-default@: '\Grav\Plugin\LiliPlugin::generateRandomSku'
+                help: 'Lo requiere el sistema de venta para identificar el inventario'
+
+              header.price_mxn:
+                ordering@: 2
+                type: text
+                label: Precio en Pesos Mexicano (MXN)
+                
+              header.oferta:
+                ordering@: 3
+                type: toggle
+                label: Oferta
+                highlight: 1
+                default: 0
+                options:
+                    0: 'No'
+                    1: 'Si'
+                
+              header.temporada:
+                ordering@: 4
+                type: toggle
+                label: Temporada
+                highlight: 1
+                default: 0
+                options:
+                    0: 'No'
+                    1: 'Si'
+                
+              header.solo_en_linea:
+                ordering@: 5
+                type: toggle
+                label: Solo en Línea
+                highlight: 1
+                default: 0
+                options:
+                    0: 'No'
+                    1: 'Si'
+
+              variantes:
+                ordering@: 6
+                type: section
+                title: Variantes
+                underline: true
+
+              header.variantes.tallas:
+                ordering@: 7
+                type: list
+                label: Tallas
+                fields:
+                  .name:
+                    type: text
+                    label: Talla
+                    help: Seleccionar la talla
+                  .type:
+                    type: hidden
+                    default: talla
+
+              header.variantes.colores:
+                ordering@: 8
+                type: list
+                label: Colores
+                fields:
+                  .name:
+                    type: text
+                    label: Color
+                  .code:
+                    type: colorpicker
+                    label: Seleccionar
+                  .type:
+                    type: hidden
+                    default: color
+              
+              content:
+                type: editor
+                ordering@: 9
+                
+              envios:
+                type: section
+                title: Envíos
+                underline: true
+
+              header.envios.peso:
+                type: text
+                label: Peso (Gramos)
+                default: 1000
+                help: Escribir el peso del producto en gramos, es para el calculo del costo del envio.
+
+
+              avanzado:
+                type: section
+                title: Avanzado
+                underline: true
+
+                fields:
+                  route:
+                    type: select
+                    label: Categoría
+                    classes: fancy
+                    data-default@: '\Grav\Plugin\Admin::route'
+                    data-options@: '\Grav\Common\Page\Pages::parentsRawRoutes'
+                    options:
+                      '/': '- Root -'
+
+
+
+        advanced:
+          unset@: true
+
+
+

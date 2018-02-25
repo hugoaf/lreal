@@ -1,0 +1,17 @@
+en:
+  CLOTH_SIZE: 'Size'
+  SELECT_CLOTH_SIZE: 'Select Size'
+  SELECT_CLOTH_COLOR: 'Select Color'
+  SELECT_MSG: 'Please Select Options'
+  ADD_TO_CART: 'Add to Cart'
+  SELECT_CURRENCY: 'Currency '
+  SELECT_LANGUAGE: 'Language '
+
+es:
+  CLOTH_SIZE: 'Talla'
+  SELECT_CLOTH_SIZE: 'Seleccione Talla'
+  SELECT_CLOTH_COLOR: 'Seleccione Color'
+  SELECT_MSG: 'Por favor seleccione opciones'
+  ADD_TO_CART: 'Adicionar al Carro'
+  SELECT_CURRENCY: 'Moneda '
+  SELECT_LANGUAGE: 'Lenguage '

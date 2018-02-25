@@ -1,0 +1,52 @@
+{% set snipcart_image = page.media.images|first %}
+{% set price_usd = (page.header.price_mxn/page.find('/configuracion').header.tipo_de_cambio)|number_format(2) %}
+
+<div class="snipcart-item block" >
+
+    {{ page.order|trim('.') }}
+
+    <h3><a href="{{ page.url }}">{{ page.header.title }}</a></h3>
+    <div class="snipcart-thumb">
+        {% if snipcart_image %}
+            <a href="{{ page.url }}">{{ snipcart_image.cropResize(700,700).html(page.title,'snipcart-thumb-image')|raw }}</a>
+        {% endif %}
+        <span class="snipcart-price">
+            {#
+            <!-- precio en USD deshabilitado por incompatibilidad con snipcart costo de envio
+            <div class="precio_usd" style="{% if grav.language.getLanguage()|e != 'en' %}display:none;{% endif %} ">
+                <span class="precio">${{ price_usd }}</span> <span class="moneda">USD</span> 
+            </div>
+            -->
+            #}
+            <div class="precio_mxn" style="{% if grav.language.getLanguage()|e != 'es' %}display:none;{% endif %} ">
+                <span class="precio">${{ page.header.price_mxn }}</span> <span class="moneda">MXN</span>
+            </div>
+               
+        </span>
+    </div>
+    <div class="snipcart-details">
+    <p>
+        <a href="{{ page.url }}"
+            class="button button-small">
+            <i class="fa fa-info-circle"></i> Details
+        </a>
+        <!--
+        <a href="#"
+            class="button button-small snipcart-add-item"
+            data-item-id="{{ page.header.product_id }}"
+            data-item-name="{{ page.header.title }}"
+            data-item-price="{{ page.header.price }}"
+            data-item-url="{{ page.url }}"
+                {% spaceless %}
+                    {% if snipcart_image %}
+                        data-item-image="{{ snipcart_image.cropResize(50,50).url|raw }}"
+                    {% endif %}
+                {% endspaceless %}
+                
+        >
+            <i class="fa fa-shopping-cart"></i> Add
+        </a>
+        -->
+    </p>
+    </div>
+</div>

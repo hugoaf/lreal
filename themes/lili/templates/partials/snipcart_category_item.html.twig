@@ -1,0 +1,16 @@
+{% set snipcart_image = page.media.images|first %}
+
+<div class="snipcart-item block">
+
+    <div class="snipcart-thumb">
+        {% if snipcart_image %}
+            <a href="{{ page.url }}">{{ snipcart_image.cropZoom(400,400).html(page.header.category,'snipcart-thumb-image')|raw }}</a>
+        {% endif %}
+    </div>
+    <div class="category-title">    
+		<h3>
+    		<a href="{{ page.url }}">{{ page.title }}</a>
+    	</h3>
+    </div>
+
+</div>

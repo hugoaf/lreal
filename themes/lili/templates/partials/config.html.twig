@@ -1,0 +1,50 @@
+<div class="toggler fa fa-gear fa-lg"></div>
+<div class="config-items">
+    <div class="lenguaje config-item">
+        <label>LANGUAGE</label>
+        {% for language in language_selector.languages %}
+
+            {% set show_language = true %}
+            {% if language == language_selector.current %}
+                {% set lang_url = page.url %}
+            {% else %}
+                {% set base_lang_url = base_url_simple ~ grav.language.getLanguageURLPrefix(language) %}
+                {% set lang_url = base_lang_url ~ language_selector.page_route ~ page.urlExtension %}
+                {% set untranslated_pages_behavior = grav.config.plugins.language_selector.untranslated_pages_behavior %}
+                {% if untranslated_pages_behavior != 'none' %}
+                    {% set translated_page = language_selector.translated_pages[language] %}
+                    {% if (not translated_page) or (not translated_page.published) %}
+                        {% if untranslated_pages_behavior == 'redirect' %}
+                            {% set lang_url = base_lang_url ~ '/' %}
+                        {% elseif untranslated_pages_behavior == 'hide' %}
+                            {% set show_language = false %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if show_language %}
+                <div class="opcion{% if language == language_selector.current %} current {% endif %}">
+                    <a href="{{ lang_url ~ uri.params }}">
+                        {% if language_display.select == 'default' or language_display.select == 'flag' %}
+                            <img alt="{{ native_name(language)|capitalize }}" src="{{ path_flags ~ language }}.png" />
+                        {% endif %}
+                        {% if language_display.select == 'default' or language_display.select == 'name' %}
+                            {{ native_name(language)|capitalize }}
+                        {% endif %}
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    <!-- // se deshabilita la seleccion de moneda y se fija en MXN en base.html.twig (js)-->
+    <div class="currency_selector config-item">
+        <label>{{'SELECT_CURRENCY'|t}}</label>
+        <div id="currency">
+            <div class="opcion mxn" data-value="mxn">Pesos (MXN)</div>
+            <div class="opcion usd" data-value="usd">Dollar (USD)</div>
+        </div>
+    </div>
+    
+
+</div>
