@@ -1,8 +1,13 @@
 $(document).ready(function () {
+    
+    let variantes = window.variantes;
+    
     console.log("ready!");
     const ID = $('a.snipcart-add-item').data('item-id');
     const ITEM_URL = $('a.snipcart-add-item').data('item-url');
     var opcionesFaltantes = '';
+
+   // falta validar si el color no esta disabled
 
     function validarOpciones() {
         opcionesFaltantes = '';
@@ -40,6 +45,23 @@ $(document).ready(function () {
 
         $('a.snipcart-add-item').data('talla', t);
 
+        //console.log(variantes);
+        $('#colores>div').addClass('disabled');
+        $('#colores>div').removeClass('enabled');
+        $('#colores>div').removeClass('selected');
+      
+        console.log("clicked talla: " + t);
+        for (let i = 0; i < variantes.length; i++) {
+           var col = variantes[i].color;
+           if( variantes[i].talla == t) {
+                console.log(col);
+                $('#colores').find('#color-'+col).removeClass('disabled');
+                $('#colores').find('#color-'+col).addClass('enabled');
+            } else {
+                //$('#colores').find('#color-'+col).addClass('disabled');
+            }
+           
+        } 
         createTitle();
         createItemId();
         validarOpciones();
@@ -47,16 +69,21 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.color', function () {
-        $(this).parent().find('.color').removeClass('selected');
-        $(this).addClass('selected');
-        var c = $(this).data('color-text');
-        $('.color-text').html(' ' + $(this).data('name') + ': ' + c);
+        if (!$(this).hasClass('disabled')) {
+            $(this).parent().find('.color').removeClass('selected');
+            $(this).addClass('selected');
+            var c = $(this).data('color-text');
+            $('.color-text').html(' ' + $(this).data('name') + ': ' + c);
 
-        $('a.snipcart-add-item').data('color', c);
+            $('a.snipcart-add-item').data('color', c);
 
-        createTitle();
-        createItemId();
-        validarOpciones();
+            createTitle();
+            createItemId();
+            validarOpciones();            
+            
+            
+        }
+
 
     });
 

@@ -70,21 +70,30 @@
         <div style="margin-left: 3rem;">
             <h1>{{ page.header.title }}</span></h1>
 
-            {% if page.header.variantes.tallas %}
+            {% if page.header.variantes %}
             <label><span class="talla-text">{{ "SELECT_CLOTH_SIZE"|t }}<span></label>
             <div id="tallas">
-                {% for talla in page.header.variantes.tallas %}
-                    <div class="option talla" id="talla-{{ talla.name }}" data-talla-text="{{ talla.name }}" data-name="{{ "CLOTH_SIZE"|t }}">{{ talla.name }}</div>
+                {% for v in page.header.variantes %}
+                    <div class="option talla" id="talla-{{ v.talla }}" data-talla-text="{{ v.talla }}" data-name="{{ "CLOTH_SIZE"|t }}">{{ v.talla }}</div>
                 {% endfor %}
             </div>
             {% endif %}
             <br />
+            
+            
+            {% set newArray = [] %}
 
-            {% if page.header.variantes.colores %}
+
+            {% if page.header.variantes %}
                 <label><span class="color-text">{{ "SELECT_CLOTH_COLOR"|t }}</span></label>
                 <div id="colores">
-                    {% for color in page.header.variantes.colores %}
-                        <div class="option color" id="color-{{ color.name }}" data-color-text="{{ color.name }}"  data-name="Color" style="background-color:{{ color.code }}">&nbsp;</div>
+                    {% for v in page.header.variantes %}
+                        {% if v.color not in newArray %}
+                        <div class="option color disabled" id="color-{{ v.color }}" data-color-text="{{ v.color }}"  data-name="Color" style="background-color:{{ v.code }}">&nbsp;</div>
+                        {% endif %}                      
+                        
+                        {% set newArray = newArray|merge([v.color]) %}
+                        
                     {% endfor %}
                 </div>
             {% endif %}
@@ -119,9 +128,11 @@
 
 <script>
 const SELECT_MSG = '{{ "SELECT_MSG"|t }}';
-//var variantes = {{ page.header.variantes|json_encode()  }};
+var variantes = {{ page.header.variantes|json_encode()  }};
 
 $(document).ready(function () {
     //console.log(variantes.tallas)
+   // var variantes = {{ page.header.variantes|json_encode() }};
+    
 });
 </script>

@@ -61,37 +61,39 @@ form:
                 title: Variantes
                 underline: true
 
-              header.variantes.tallas:
+              header.variantes:
                 ordering@: 7
                 type: list
-                label: Tallas
+                label: Variantes
                 fields:
-                  .name:
+                    
+                  .id_producto:
+                    type: text
+                    label: ID Producto
+                    help: Identificador Unico
+                    
+                  .cantidad:
+                    type: text
+                    label: Cantidad
+                    help: Cantidad en Inventario
+                    
+                  .talla:
                     type: text
                     label: Talla
                     help: Seleccionar la talla
-                  .type:
-                    type: hidden
-                    default: talla
-
-              header.variantes.colores:
-                ordering@: 8
-                type: list
-                label: Colores
-                fields:
-                  .name:
+                    
+                  .color:
                     type: text
                     label: Color
+                    
                   .code:
                     type: colorpicker
                     label: Seleccionar
-                  .type:
-                    type: hidden
-                    default: color
+                    
               
               content:
                 type: editor
-                ordering@: 9
+                ordering@: 8
                 
               envios:
                 type: section

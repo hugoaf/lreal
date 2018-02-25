@@ -608,6 +608,8 @@ ul.pagination {
   margin: 2px; }
   .option.selected {
     border-color: #1BB3E9; }
+  .option.disabled {
+    opacity: 0.1; }
 
 .button.snipcart-add-item {
   margin-top: 2rem;

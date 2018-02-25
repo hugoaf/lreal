@@ -44,6 +44,9 @@ $cart-accent: #e74c3c;
     &.selected {
         border-color: #1BB3E9;
     }
+    &.disabled {
+        opacity: 0.1;
+    }
 }
 
 
