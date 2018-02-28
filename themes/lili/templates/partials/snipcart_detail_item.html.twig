@@ -3,16 +3,25 @@
 {% set price_usd = (page.header.price_mxn/page.find('/configuracion').header.tipo_de_cambio)|number_format(2) %}
 
 
-{% set talla = uri.param('talla')|defined('') %}
+{% set talla = uri.param('talla')|defined('')|replace({' ':''}) %}
 {% set color = uri.param('color')|defined('') %}
 {% set titulo = page.header.title %}
 {% set url = page.url %}
 {% set id = page.header.product_id %}
-
+{% set max_quantity = 0 %}
+ 
 {% if talla is not empty %}
-    {% set titulo = titulo ~ ' talla: ' ~ talla|replace({' ':''}) %}
+    {% set titulo = titulo ~ ' talla: ' ~ talla %}
     {% set url = url ~ '/talla:' ~ talla %}
     {% set id = id ~ '-' ~ talla %}
+    
+    {% for v in page.header.variantes  %}
+        {% if v.talla == talla %}
+            {% set max_quantity = v.cantidad %}
+        {% endif %}
+    {% endfor %}
+    
+    
 {% endif %}
 
 {% if color is not empty %}
@@ -108,7 +117,7 @@
                    data-item-price='{"usd": {{ price_usd }}, "mxn": {{ page.header.price_mxn }} }'
                    data-item-url="{{ url }}"
                    data-item-weight="{{ page.header.envios.peso|default(1000) }}"
-                   data-item-max-quantity="0"
+                   data-item-max-quantity="{{ max_quantity }}"
                    {% spaceless %}
                        {% if snipcart_image %}
                            data-item-image="{{ snipcart_image.cropResize(50,50).url }}"
