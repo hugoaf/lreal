@@ -1,1 +1,1 @@
-# Grav Snipcart Shipping Plugin for Webhooks
+# Sipping Rates Plugin for Snipcart webhooks

@@ -1,7 +1,5 @@
 ---
-title: Search Results
-order_by: date
-order_dir: desc
-template: simplesearch_results
+title: Snipcart Shipping Rates Webhool
+template: snipcart-shipping
 ---
 

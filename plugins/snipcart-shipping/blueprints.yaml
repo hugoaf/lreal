@@ -30,20 +30,20 @@ form:
       type: text
       size: medium
       label: Route
-      default: /random
-      help: Default route of the simplesearch plugin
+      default: /snipcart-shipping
+      help: Default route of the shipping plugin, this route must be set in the snipcart.com shipping webhooks
 
     template:
       type: text
       size: medium
       label: Template
-      default: simplesearch_results
-      help: Name of the template for the search results
+      default: snipcart-shipping
+      help: Name of the template for the shipping results
 
 
     shippingrates:
         type: list
-        label: Costos de Envío
+        label: Opciones de Shipping
         fields:
           .description:
             type: text

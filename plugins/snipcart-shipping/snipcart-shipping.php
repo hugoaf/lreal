@@ -63,16 +63,23 @@ class SnipcartshippingPlugin extends Plugin
         if ($this->isAdmin()) {
             return;
         }
+        
+        // get the post raw body
+        $json = file_get_contents('php://input');
+        $this->snipcart_order = json_decode($json, true);
+        
+        // verify if web have a post data with an eventName from snipcart and if that event name is about shipping rates
+        if ( !isset($this->snipcart_order["eventName"]) || $this->snipcart_order["eventName"] !== "shippingrates.fetch") {
+            return;
+        }
+    
+        $this->validateRequest();
 
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 0],
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
         ]);
         
-        // get the post raw body
-        $json = file_get_contents('php://input');
-        $this->snipcart_order = json_decode($json, true);
-
         
     }
 
@@ -83,20 +90,9 @@ class SnipcartshippingPlugin extends Plugin
     public function onPagesInitialized()
     {
         $page = $this->grav['page'];
-        
-
-        $route = null;
-       
-
-        // If a page exists merge the configs
-        if ($page) {
-            $this->config->set('plugins.simplesearch', $this->mergeConfig($page));
-        }
 
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
-        
-        $cart = $uri->param('query') ?: $uri->query('query');
         
         $route = $this->config->get('plugins.snipcart-shipping.route');
 
@@ -122,9 +118,6 @@ class SnipcartshippingPlugin extends Plugin
         $this->grav['page'] = $page;
 
 
-        
-
-
     }
 
 
@@ -135,57 +128,35 @@ class SnipcartshippingPlugin extends Plugin
     {
         $twig = $this->grav['twig'];
         $rates = $this->config->get('plugins.snipcart-shipping.shippingrates');
+        $order_total_weight = (float) $this->snipcart_order['content']['totalWeight'];
         
-        $total_weight = $this->snipcart_order['content']['totalWeight'];
-        
-        // se remueven los shipping rates que no coinciden con el peso
+        // removing the out of weight range shipping rates
         foreach ($rates as $k => $rate) {
-            if ( $total_weight < $rate['min_weight'] || $total_weight > $rate['max_weight']) {
+            if ( $order_total_weight < (float) $rate['min_weight'] || $order_total_weight > (float) $rate['max_weight']) {
                 unset($rates[$k]);
             }
         }
         
-  
-        $currency = $this->snipcart_order['content']['currency'];
+        $order_currency = $this->snipcart_order['content']['currency'];
                 
-        if ($currency === 'usd') {
+        if ($order_currency === 'usd') {
             $tc = $this->grav['page']->find('/configuracion')->header()->tipo_de_cambio;
             foreach ($rates as $k => $rate) {
                 $rates[$k]['cost'] = $rate['cost'] / $tc;
             }            
-        }            
-
+        }
         
         $twig->twig_vars['rates'] = array_values($rates);
         
     }
 
-    protected function validateRequest($data)
+    protected function validateRequest()
     {
         if (!isset($_SERVER['HTTP_X_SNIPCART_REQUESTTOKEN'])) {
-            throw new Exception('Invalid request: no request token');
-        }
-        $requestToken = $_SERVER['HTTP_X_SNIPCART_REQUESTTOKEN'];
-        $g = new Gateway();
-        $g->init('https://app.snipcart.com/api/requestvalidation/' . $requestToken);
-        $g->setopt('GET', 1);
-        $g->setopt(CURLOPT_USERPWD, eventSnipcart::SNIPCART_API_KEY . ':');
-        $g->setopt(CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        $g->setopt('HTTPHEADER', array('Accept: application/json'));
-        $response = $g->exec();
-        $status = $g->getInfoLast();
+            throw new \RuntimeException('Invalid request: no request token');
+        }        
+       
 
-        if (empty($response) || $status['http_code'] != 200) {
-            throw new Exception('Invalid request: no response');
-        }
-
-        $response = @json_decode($response);
-        if (!$response) {
-            throw new Exception('Invalid request: response not json');
-        }
-        if ($response->token !== $requestToken) {
-            throw new Exception('Invalid request: invalid token');
-        }
         return true;
     }
 
