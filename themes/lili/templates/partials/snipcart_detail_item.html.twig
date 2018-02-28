@@ -83,7 +83,7 @@
             
             {% set newArray = [] %}
 
-
+            {# color options disabled
             {% if page.header.variantes %}
                 <label><span class="color-text">{{ "SELECT_CLOTH_COLOR"|t }}</span></label>
                 <div id="colores">
@@ -97,6 +97,7 @@
                     {% endfor %}
                 </div>
             {% endif %}
+            #}
 
 
             <div>
@@ -107,6 +108,7 @@
                    data-item-price='{"usd": {{ price_usd }}, "mxn": {{ page.header.price_mxn }} }'
                    data-item-url="{{ url }}"
                    data-item-weight="{{ page.header.envios.peso|default(1000) }}"
+                   data-item-max-quantity="0"
                    {% spaceless %}
                        {% if snipcart_image %}
                            data-item-image="{{ snipcart_image.cropResize(50,50).url }}"

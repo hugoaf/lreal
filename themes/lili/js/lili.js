@@ -40,20 +40,19 @@ $(document).ready(function () {
     $(document).on('click', '.talla', function () {
         $(this).parent().find('.talla').removeClass('selected');
         $(this).addClass('selected');
-        var t = $(this).data('talla-text');
-        $('.talla-text').html(' ' + $(this).data('name') + ': ' + t);
+        var talla = $(this).data('talla-text');
+        $('.talla-text').html(' ' + $(this).data('name') + ': ' + talla);
 
-        $('a.snipcart-add-item').data('talla', t);
+        $('a.snipcart-add-item').data('talla', talla);
 
-        //console.log(variantes);
         $('#colores>div').addClass('disabled');
         $('#colores>div').removeClass('enabled');
         $('#colores>div').removeClass('selected');
       
-        console.log("clicked talla: " + t);
+        console.log("clicked talla: " + talla);
         for (let i = 0; i < variantes.length; i++) {
            var col = variantes[i].color;
-           if( variantes[i].talla == t) {
+           if( variantes[i].talla == talla) {
                 console.log(col);
                 $('#colores').find('#color-'+col).removeClass('disabled');
                 $('#colores').find('#color-'+col).addClass('enabled');
@@ -64,10 +63,12 @@ $(document).ready(function () {
         } 
         createTitle();
         createItemId();
+        createItemMaxQuantity(talla);
         validarOpciones();
 
     });
 
+    /* no usada por el momento, color deshabilitado */
     $(document).on('click', '.color', function () {
         if (!$(this).hasClass('disabled')) {
             $(this).parent().find('.color').removeClass('selected');
@@ -104,16 +105,32 @@ $(document).ready(function () {
         $('a.snipcart-add-item').attr('data-item-url', new_url);
         $('a.snipcart-add-item').data('item-url', new_url);
 
-        console.log('Id nuevo: ' + $('a.snipcart-add-item').data('item-id'));
-        console.log('Url nuevo: ' + $('a.snipcart-add-item').data('item-url'));
+        console.log('Id: ' + $('a.snipcart-add-item').data('item-id'));
+        console.log('Url: ' + $('a.snipcart-add-item').data('item-url'));
     }
 
-
+    // al seleccionar la talla actualiza el titulo del producto en el boton snipcart
     function createTitle() {
         var titulo = $('h1').text() + $('.talla-text').text() + ' ' + $('.color-text').text();
         $('a.snipcart-add-item').attr('data-item-name', titulo);
         $('a.snipcart-add-item').data('item-name', titulo);
-        console.log('Titulo nuevo: ' + $('a.snipcart-add-item').data('item-name'));
+        console.log('Titulo: ' + $('a.snipcart-add-item').data('item-name'));
+    }
+    
+    // al seleccionar la talla actualiza la cantidad disponible en el boton snipcart
+    function createItemMaxQuantity(talla) {
+        let max_quantity = 0;
+        for (let i = 0; i < variantes.length; i++) {
+           if( variantes[i].talla == talla) {
+                max_quantity = variantes[i].cantidad
+                break;
+            }
+           
+        } 
+
+        $('a.snipcart-add-item').attr('data-item-max-quantity', max_quantity);
+        $('a.snipcart-add-item').data('item-max-quantity', max_quantity);
+        console.log('Item Max Quantity: ' + $('a.snipcart-add-item').data('item-max-quantity'));
     }
 
 

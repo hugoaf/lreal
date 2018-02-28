@@ -66,29 +66,16 @@ form:
                 type: list
                 label: Variantes
                 fields:
-                    
-                  .id_producto:
+                  .talla:
                     type: text
-                    label: ID Producto
-                    help: Identificador Unico
-                    
+                    label: Talla
+                    help: Seleccionar la talla
                   .cantidad:
                     type: text
                     label: Cantidad
                     help: Cantidad en Inventario
                     
-                  .talla:
-                    type: text
-                    label: Talla
-                    help: Seleccionar la talla
-                    
-                  .color:
-                    type: text
-                    label: Color
-                    
-                  .code:
-                    type: colorpicker
-                    label: Seleccionar
+
                     
               
               content:
