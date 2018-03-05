@@ -6,6 +6,8 @@ oferta: '0'
 temporada: '0'
 solo_en_linea: '1'
 media_order: boy_cap_burgundy_2.jpg
+envios:
+    peso: '1000'
 date: '2018-02-20 00:15'
 ---
 

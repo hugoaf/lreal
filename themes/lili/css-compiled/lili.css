@@ -719,7 +719,8 @@ body {
   body #snipcart-detail {
     padding-top: 0; }
     body #snipcart-detail h1 {
-      font-size: 1.8rem; }
+      font-size: 1.5rem;
+      margin: 1rem 0 1.5rem 0; }
     body #snipcart-detail label {
       font-weight: bold; }
     body #snipcart-detail .snipcart-img {

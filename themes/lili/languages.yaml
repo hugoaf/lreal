@@ -6,6 +6,10 @@ en:
   ADD_TO_CART: 'Add to Cart'
   SELECT_CURRENCY: 'Currency '
   SELECT_LANGUAGE: 'Language '
+  TAG_NEW: 'New'
+  TAG_TEMPORADA: 'Season'
+  TAG_ONLINE_ONLY: 'Online Only'
+  TAG_OFFER: 'Offer'
 
 es:
   CLOTH_SIZE: 'Talla'
@@ -15,3 +19,7 @@ es:
   ADD_TO_CART: 'Adicionar al Carro'
   SELECT_CURRENCY: 'Moneda '
   SELECT_LANGUAGE: 'Lenguage '
+  TAG_NEW: 'Nuevo'
+  TAG_TEMPORADA: 'Temporada'
+  TAG_ONLINE_ONLY: 'Solo en Línea'
+  TAG_OFFER: 'Oferta'
