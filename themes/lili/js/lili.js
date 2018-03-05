@@ -44,6 +44,8 @@ $(document).ready(function () {
         $('.talla-text').html(' ' + $(this).data('name') + ': ' + talla);
 
         $('a.snipcart-add-item').data('talla', talla);
+        
+        
 
         $('#colores>div').addClass('disabled');
         $('#colores>div').removeClass('enabled');
@@ -65,6 +67,10 @@ $(document).ready(function () {
         createItemId();
         createItemMaxQuantity(talla);
         validarOpciones();
+        
+        // se estaablece el valor de la talla en el custom hidden field para enviar a snipcart
+        $('a.snipcart-add-item').attr('data-item-custom2-value', talla);
+        $('a.snipcart-add-item').data('item-custom2-value', tall);
 
     });
 

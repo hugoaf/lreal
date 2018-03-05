@@ -1,6 +1,6 @@
 name: Snipcart Webhooks
 version: 0.9
-description: "Webhooks for Snipcart, reads Snipcart order data and returns json string with options"
+description: "Webhooks for Snipcart, gets snipcart order data and do something"
 icon: dollar
 author:
   name: Hugo Avila
@@ -24,65 +24,3 @@ form:
         0: PLUGIN_ADMIN.DISABLED
       validate:
         type: bool
-
-
-    route:
-      type: text
-      size: medium
-      label: Route
-      default: /random
-      help: Default route of the snipcart-webhooks plugin
-
-
-
-
-    shipping:
-      type: section
-      title: Shipping Configuration
-      underline: true
-
-    shipping.enabled:
-        type: toggle
-        label: Enable Shipping
-        default: 1
-        highlight: 1
-        options:
-          0: Disabled
-          1: Enabled
-
-    template:
-      type: text
-      size: medium
-      label: Template
-      default: simplesearch_results
-      help: Name of the template for the webhook results
-
-
-    shippingrates:
-        type: list
-        label: Shipping Options
-        fields:
-          .description:
-            type: text
-            label: Description
-            help: This text will appear in the cart when user select the shipping rate
-            validate:
-              required: true
-          .cost:
-            type: text
-            label: Shipping cost
-            default: 0
-            validate:
-              required: true
-          .min_weight:
-            type: text
-            label: Minumum weight
-            default: 0
-            validate:
-              required: true
-          .max_weight:
-            type: text
-            label: Maximum weight
-            default: 2000
-            validate:
-              required: true

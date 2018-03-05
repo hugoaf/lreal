@@ -118,6 +118,13 @@
                    data-item-url="{{ url }}"
                    data-item-weight="{{ page.header.envios.peso|default(1000) }}"
                    data-item-max-quantity="{{ max_quantity }}"
+                   data-item-custom1-name="base_url"
+                   data-item-custom1-type="hidden"
+                   data-item-custom1-value={{page.url}}
+                   data-item-custom2-name="talla"
+                   data-item-custom2-type="hidden"
+                   data-item-custom2-value=""
+                   
                    {% spaceless %}
                        {% if snipcart_image %}
                            data-item-image="{{ snipcart_image.cropResize(50,50).url }}"
