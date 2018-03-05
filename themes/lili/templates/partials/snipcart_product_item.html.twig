@@ -11,13 +11,11 @@
             <a href="{{ page.url }}">{{ snipcart_image.cropResize(700,700).html(page.title,'snipcart-thumb-image')|raw }}</a>
         {% endif %}
         <span class="snipcart-price">
-            {#
-            <!-- precio en USD deshabilitado por incompatibilidad con snipcart costo de envio
+
             <div class="precio_usd" style="{% if grav.language.getLanguage()|e != 'en' %}display:none;{% endif %} ">
                 <span class="precio">${{ price_usd }}</span> <span class="moneda">USD</span> 
             </div>
-            -->
-            #}
+
             <div class="precio_mxn" style="{% if grav.language.getLanguage()|e != 'es' %}display:none;{% endif %} ">
                 <span class="precio">${{ page.header.price_mxn }}</span> <span class="moneda">MXN</span>
             </div>
