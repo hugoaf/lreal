@@ -6,29 +6,26 @@ use Grav\Common\Uri;
 use Grav\Common\Page\Page;
 use Grav\Common\Page\Types;
 use RocketTheme\Toolbox\Event\Event;
-use Symfony\Component\Yaml\Yaml;
-
 
 class SnipcartWebhooksPlugin extends Plugin
 {
-    
+
     /**
      * @var array snipcart raw post body https://docs.snipcart.com/webhooks/shipping
-     */    
+     */
     protected $snipcart_order;
-    
+
     /**
      * @var float
-     */    
+     */
     protected $tipo_de_cambio;
-
 
     /**
      * @return array
      */
     public static function getSubscribedEvents()
     {
-        
+
         return [
             'onPluginsInitialized' => ['onPluginsInitialized', 0],
             'onTwigTemplatePaths' => ['onTwigTemplatePaths', 0],
@@ -45,7 +42,6 @@ class SnipcartWebhooksPlugin extends Plugin
         $types = $event->types;
         $types->scanTemplates('plugins://snipcart-webhooks/templates');
     }
-
 
     /**
      * Add current directory to twig lookup paths.
@@ -64,31 +60,20 @@ class SnipcartWebhooksPlugin extends Plugin
             return;
         }
 
-        
         // get the post raw body
         $json = file_get_contents('php://input');
         $this->snipcart_order = json_decode($json, true);
 
-
-      
-        if ( !isset($this->snipcart_order["eventName"])  ) {
+        if (!isset($this->snipcart_order["eventName"])) {
             return;
         }
-        
 
-        
         $this->enable([
             'onPagesInitialized' => ['onPagesInitialized', 0],
             'onTwigSiteVariables' => ['onTwigSiteVariables', 0]
         ]);
-        
-        
-        
-        
     }
 
-    
-    
     /**
      * Build results.
      */
@@ -98,7 +83,7 @@ class SnipcartWebhooksPlugin extends Plugin
 
         /** @var Uri $uri */
         $uri = $this->grav['uri'];
-        
+
         $route = $this->config->get('plugins.snipcart-webhooks.route');
 
         // performance check for route
@@ -107,7 +92,7 @@ class SnipcartWebhooksPlugin extends Plugin
         }
 
 
-        // create the snipcart-shipping page
+        // create the snipcart-webhook page
         $page = new Page;
         $page->init(new \SplFileInfo(__DIR__ . '/pages/snipcart-webhooks.md'));
 
@@ -119,13 +104,8 @@ class SnipcartWebhooksPlugin extends Plugin
 
         // fix RuntimeException: Cannot override frozen service "page" issue
         unset($this->grav['page']);
-
         $this->grav['page'] = $page;
-
-
-
     }
-
 
     /**
      * Set needed variables to display the results.
@@ -133,41 +113,34 @@ class SnipcartWebhooksPlugin extends Plugin
     public function onTwigSiteVariables()
     {
         $twig = $this->grav['twig'];
-        
+
         //$this->snipcart_order["eventName"] = 'order.completed';
-                
+
         switch ($this->snipcart_order["eventName"]) {
-            
-             case 'shippingrates.fetch':
+
+            case 'shippingrates.fetch':
                 return;
-                break;           
-            
-            
+                break;
+
             case 'order.completed':
 
                 $this->processOrderCompletedEvent();
                 break;
 
-
-
             default:
                 $this->returnBadRequest(array('reason' => 'Unsupported event'));
                 break;
         }
-        
-        
-        $result = Array();
-        
-        $twig->twig_vars['result'] = array_values($result);
-        
-    }
 
-    
-    
+
+        $result = Array();
+
+        $twig->twig_vars['result'] = array_values($result);
+    }
 
     protected function processOrderCompletedEvent()
     {
-        
+
         $content = $this->snipcart_order['content'];
         $updated = array();
 
@@ -182,13 +155,11 @@ class SnipcartWebhooksPlugin extends Plugin
         }
 
         //$this->returnJson($updated);
-        
     }
-    
-    
-    private function updateItemQuantity($item) {
-        
-        
+
+    private function updateItemQuantity($item)
+    {
+
         $order_product_quantity = $item['quantity'];
         $order_product_url = '/';
 
@@ -200,88 +171,43 @@ class SnipcartWebhooksPlugin extends Plugin
                 $order_product_talla = $custom_field['value'];
             }
         }
-        
+
         $url = substr($order_product_url, 7); // se elimina el folder /pagina/
-        
         //$productPage = $this->grav['pages']->find($url);
-        
         // get the file of the page to modify
         $file = new \SplFileInfo($this->grav['pages']->find($url)->filePath());
-        
+
         $page = new Page();
         $page->init($file);
-        
-        $header = new \Grav\Common\Page\Header((Array)$page->header());
+
+        $header = new \Grav\Common\Page\Header((Array) $page->header());
         $variants = $header->get('variantes');
 
-        $current_inventory = 0;
         $new_variants = $variants;
         foreach ($variants as $k => $var) {
-            if ($var['talla'] === $order_product_talla){
-                $current_inventory = $var['cantidad'];
-                $new_variants[$k]['cantidad'] = (string)($current_inventory - $order_product_quantity);
+            if ($var['talla'] === $order_product_talla) {
+                $new_variants[$k]['cantidad'] = (string) ($var['cantidad'] - $order_product_quantity);
             }
         }
-        
+
         $header->set('variantes', $new_variants);
- 
         $page->header($header->items);
-        
         $page->save();
-        
-        
-        var_dump($header);
-        
-       
-
-        
-        var_dump($page->header());
-        
-
-        //var_dump($page);
-          
-        /*
-        $service = craft()->entries;
-
-        $entry = $service->getEntryById($item['id']);
-
-        if ($entry != null) {
-            $attrs = $entry->getContent();
-
-            $newQuantity = $attrs['quantity'] - $item['quantity'];
-
-            $entry->getContent()->setAttributes(array(
-                'quantity' => $newQuantity
-            ));
-
-            $service->saveEntry($entry);
-
-            return $entry;
-        } else {
-            return null;
-        }*/
     }
-
-    
-    
-    
-    
 
     protected function validateRequest($snipcart_order)
     {
-        
+
         if (!isset($_SERVER['HTTP_X_SNIPCART_REQUESTTOKEN'])) {
             throw new \RuntimeException('Invalid request: no request token');
         }
-     
+
         return true;
     }
 
-    
-    private function returnBadRequest($errors = array()) {
+    private function returnBadRequest($errors = array())
+    {
         header('HTTP/1.1 400 Bad Request');
         //$this->returnJson(array('success' => false, 'errors' => $errors));
     }
-    
-    
 }
