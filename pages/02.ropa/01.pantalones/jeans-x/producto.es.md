@@ -8,13 +8,14 @@ solo_en_linea: '0'
 variantes:
     -
         talla: '3'
-        cantidad: '2'
+        cantidad: '6'
     -
         talla: '4'
-        cantidad: '15'
+        cantidad: '10'
 media_order: 'Lovely-Pepa-Collection-Leon-Jeans-LP30-001_026.jpg,jeans1.jpeg,jeans2.jpeg,jeans3.jpeg'
 envios:
     peso: '1000'
+published: false
 date: '2018-02-15 00:00'
 price: '19.94'
 ---
