@@ -17,10 +17,10 @@
                                 <div class="bloque-producto col-6 col-sm-12">
                                     {% include 'partials/snipcart_product_item.html.twig' with {'page': producto, 'parent': page} %}
                                     <div class="labels">
-                                        {{ ( producto.header.date|date('U') > "-15 days"|date("U") ) ? "<label class='nuevo'>Nuevo</label>"  }}
-                                        {{ producto.header.oferta ? "<label class='oferta'>Oferta</label>"  }}
-                                        {{ producto.header.temporada ? "<label class='temporada'>Temporada</label>"  }}</label>
-                                        {{ producto.header.solo_en_linea ? "<label class='soloenlinea'>Solo en línea</label>"  }}</label>
+                                        {{ ( producto.header.date|date('U') > "-15 days"|date("U") ) ? "<label class='nuevo'>" ~  'TAG_NEW'|t ~ "</label>"  }}
+                                        {{ producto.header.oferta ? "<label class='oferta'>" ~  'TAG_OFFER'|t ~ "</label>"  }}
+                                        {{ producto.header.temporada ? "<label class='temporada'>" ~  'TAG_TEMPORADA'|t ~ "</label>"  }}</label>
+                                        {{ producto.header.solo_en_linea ? "<label class='soloenlinea'>" ~  'TAG_ONLINE_ONLY'|t ~ "</label>"  }}</label>
                                     </div>
                                 </div>
                             {% endif %}
