@@ -10,20 +10,27 @@ form:
       fields:
 
         content:
+            ordering@: 1
 
             fields:
+                
+              header.title:
+                ordering@: 0
 
               header.product_id:
-                ordering@: 1
                 type: text
                 label: 'ID Producto (SKU)'
                 data-default@: '\Grav\Plugin\LiliPlugin::generateRandomSku'
-                help: 'Lo requiere el sistema de venta para identificar el inventario'
+                help: 'Lo requiere el sistema de snipcart para identificar el producto'
 
+
+                
               header.price_mxn:
                 ordering@: 2
                 type: text
-                label: Precio en Pesos Mexicano (MXN)
+                label: Precio en Pesos (MXN)
+              
+
                 
               header.oferta:
                 ordering@: 3
@@ -76,11 +83,15 @@ form:
                     help: Cantidad en Inventario
                     
 
-                    
-              
+                
+              header.media_order:
+                ordering@: title
               content:
-                type: editor
-                ordering@: 8
+                ordering@: variantes
+                classes: corto
+             
+              
+
                 
               envios:
                 type: section
@@ -94,25 +105,25 @@ form:
                 help: Escribir el peso del producto en gramos, es para el calculo del costo del envio.
 
 
-              avanzado:
-                type: section
-                title: Avanzado
-                underline: true
-
-                fields:
-                  route:
-                    type: select
-                    label: Categoría
-                    classes: fancy
-                    data-default@: '\Grav\Plugin\Admin::route'
-                    data-options@: '\Grav\Common\Page\Pages::parentsRawRoutes'
-                    options:
-                      '/': '- Root -'
+        
+        ingles:
+            type: tab
+            title: Ingles
+            ordering@: content
+            fields:
+              header.title_en:
+                type: text
+                label: Titulo Ingles
+              header.desc_en:
+                type: editor
+                label: Descripción Ingles
 
 
-
+        options:
+            ordering@: ingles
         advanced:
-          unset@: true
+            ordering@: options
+            unset@: true
 
 
 

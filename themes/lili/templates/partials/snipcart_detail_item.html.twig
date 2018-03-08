@@ -6,9 +6,18 @@
 {% set talla = uri.param('talla')|defined('')|replace({' ':''}) %}
 {% set color = uri.param('color')|defined('') %}
 {% set titulo = page.header.title %}
+{% set contenido = page.content %}
+{% if grav.language.getLanguage()|e == 'en' and page.header.title_en %}
+    {% set titulo = page.header.title_en %}
+{% endif %}
+{% if grav.language.getLanguage()|e == 'en' and page.header.content_en %}
+    {% set contenido = page.header.content_en %}
+{% endif %}
+
 {% set url = page.url %}
 {% set id = page.header.product_id %}
 {% set max_quantity = 0 %}
+
  
 {% if talla is not empty %}
     {% set titulo = titulo ~ ' talla: ' ~ talla %}
@@ -77,7 +86,7 @@
         </div>
         -->
         <div style="margin-left: 3rem;">
-            <h1>{{ page.header.title }}</span></h1>
+            <h1>{{ titulo }}</span></h1>
 
             {% if page.header.variantes %}
             <label><span class="talla-text">{{ "SELECT_CLOTH_SIZE"|t }}<span></label>
@@ -137,7 +146,7 @@
             </div>
             
             
-            <p>{{ page.content|raw }}</p>
+            <p>{{ contenido }}</p>
 
         </div>
 
