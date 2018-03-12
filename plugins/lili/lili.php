@@ -4,6 +4,8 @@ namespace Grav\Plugin;
 use Grav\Common\Grav;
 use Grav\Common\Plugin;
 use RocketTheme\Toolbox\Event\Event;
+use RocketTheme\Toolbox\File\File;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class LiliPlugin
@@ -64,14 +66,29 @@ class LiliPlugin extends Plugin
         return $this->grav['page']->title();
     }
     
-    
+    /*
+     *  Obtiene un compuesto LR + contador pages plugin + random
+     * 
+     */
     public static function generateRandomSku($length = 2) {
         
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         
         $grav = Grav::instance();
-        $pages = $grav['pages']->parentsRawRoutes(true);
-        $count = count($pages)+1;
+      
+        $filename = 'pages-counter.txt';
+        $folder = 'pages-counter';
+        $locator = $grav['locator'];
+        $data_path = $locator->findResource('user://data', true);
+        $fullFileName = $data_path . DS . $folder . DS . $filename;
+        $file = File::instance($fullFileName);
+
+        $count = Yaml::parse($file->content());
+
+        
+        //$grav = Grav::instance();
+        //$pages = $grav['pages']->parentsRawRoutes(true);
+        //$count = count($pages)+1;
         
         
         $charactersLength = strlen($characters);
