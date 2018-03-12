@@ -27,7 +27,6 @@ variantes:
     -
         talla: '13'
         cantidad: '1'
-product_id: LR-45-E3
 envios:
     peso: '1000'
 date: '2018-03-05 18:01'

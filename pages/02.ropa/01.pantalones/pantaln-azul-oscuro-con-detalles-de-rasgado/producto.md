@@ -1,6 +1,6 @@
 ---
 title: 'Pantalón azul oscuro con detalles de rasgado'
-product_id: LR-44-WW
+media_order: Pant1web.jpg
 price_mxn: '395'
 oferta: '0'
 temporada: '0'
@@ -27,7 +27,7 @@ variantes:
     -
         talla: '13'
         cantidad: '1'
-media_order: Pant1web.jpg
+product_id: LR-44-WW
 envios:
     peso: '1000'
 title_en: 'Jeans dark blue with prewashed details'

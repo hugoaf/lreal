@@ -1,6 +1,6 @@
 ---
 title: 'Jeans Chicago'
-product_id: LR-43-1J
+media_order: LP30-003_Lovely_Pepa_4.jpg
 price_mxn: '499'
 oferta: '0'
 temporada: '0'
@@ -9,7 +9,7 @@ variantes:
     -
         talla: Unitalla
         cantidad: '5'
-media_order: LP30-003_Lovely_Pepa_4.jpg
+product_id: LR-43-1J
 envios:
     peso: '1000'
 published: false
